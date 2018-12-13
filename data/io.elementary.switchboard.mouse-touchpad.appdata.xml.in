@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>github.alecaddd.switchboard.tablet</id>
+  <extends>io.elementary.switchboard</extends>
+  <name>Tablet Settings</name>
+  <summary>Configure graphic tablets</summary>
+  <screenshots>
+      <screenshot type="default">
+          <image>https://raw.githubusercontent.com/elementary/switchboard-plug-tablet/master/data/screenshot-general.png</image>
+      </screenshot>
+  </screenshots>
+  <url type="homepage">https://alecaddd.com</url>
+  <url type="bugtracker">https://github.com/alecaddd/switchboard-plug-tablet/issues</url>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+</component>
