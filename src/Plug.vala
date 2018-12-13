@@ -18,24 +18,22 @@
  */
 
 public class Tablet.Plug : Switchboard.Plug {
-    private Backend.MouseSettings mouse_settings;
-    private Backend.TouchpadSettings touchpad_settings;
+    private Backend.GeneralSettings general_settings;
+    private Backend.PenSettings pen_settings;
+    private Backend.RingerSettings ringer_settings;
 
     private Gtk.Stack stack;
     private Gtk.ScrolledWindow scrolled;
 
     private GeneralView general_view;
-    private MouseView mouse_view;
-    private TouchpadView touchpad_view;
+    private PenView pen_view;
+    private RingerView ringer_view;
 
     public Plug () {
         var settings = new Gee.TreeMap<string, string?> (null, null);
-        settings.set ("input/pointer/mouse", "mouse");
-        settings.set ("input/pointer/touch", "touchpad");
-        settings.set ("input/pointer", "general");
-        // deprecated
-        settings.set ("input/mouse", null);
-        settings.set ("input/touch", "touchpad");
+        settings.set ("input/tablet/pen", "pen");
+        settings.set ("input/tablet/ringer", "ringer");
+        settings.set ("input/tablet", "general");
 
         Object (
             category: Category.HARDWARE,
@@ -54,15 +52,15 @@ public class Tablet.Plug : Switchboard.Plug {
             weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_default ();
             default_theme.add_resource_path ("/github/alecaddd/switchboard/tablet");
 
-            general_view = new GeneralView (mouse_settings);
-            mouse_view = new MouseView ();
-            touchpad_view = new TouchpadView (touchpad_settings);
+            general_view = new GeneralView (general_settings);
+            pen_view = new PenView (pen_settings);
+            ringer_view = new RingerView (ringer_settings);
 
             stack = new Gtk.Stack ();
             stack.margin = 12;
             stack.add_titled (general_view, "general", _("General"));
-            stack.add_titled (mouse_view, "mouse", _("Mouse"));
-            stack.add_titled (touchpad_view, "touchpad", _("Touchpad"));
+            stack.add_titled (pen_view, "pen", _("Pen"));
+            stack.add_titled (ringer_view, "ringer", _("Ringer"));
 
             var switcher = new Gtk.StackSwitcher ();
             switcher.halign = Gtk.Align.CENTER;
@@ -91,11 +89,11 @@ public class Tablet.Plug : Switchboard.Plug {
 
     public override void search_callback (string location) {
         switch (location) {
-            case "mouse":
-                stack.set_visible_child_name ("mouse");
+            case "pen":
+                stack.set_visible_child_name ("pen");
                 break;
-            case "touchpad":
-                stack.set_visible_child_name ("touchpad");
+            case "ringer":
+                stack.set_visible_child_name ("ringer");
                 break;
             case "general":
             default:
@@ -107,29 +105,18 @@ public class Tablet.Plug : Switchboard.Plug {
     /* 'search' returns results like ("Keyboard → Behavior → Duration", "keyboard<sep>behavior") */
     public override async Gee.TreeMap<string, string> search (string search) {
         var search_results = new Gee.TreeMap<string, string> ((GLib.CompareDataFunc<string>)strcmp, (Gee.EqualDataFunc<string>)str_equal);
-        search_results.set ("%s → %s".printf (display_name, _("Primary button")), "general");
-        search_results.set ("%s → %s".printf (display_name, _("Reveal pointer")), "general");
-        search_results.set ("%s → %s".printf (display_name, _("Middle click paste")), "general");
-        search_results.set ("%s → %s".printf (display_name, _("Long-press secondary click")), "general");
-        search_results.set ("%s → %s".printf (display_name, _("Long-press length")), "general");
-        search_results.set ("%s → %s".printf (display_name, _("Middle click paste")), "general");
-        search_results.set ("%s → %s".printf (display_name, _("Mouse")), "mouse");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Mouse"), _("Pointer speed")), "mouse");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Mouse"), _("Pointer acceleration")), "mouse");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Mouse"), _("Natural scrolling")), "mouse");
-        search_results.set ("%s → %s".printf (display_name, _("Touchpad")), "touchpad");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Touchpad"), _("Pointer speed")), "touchpad");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Touchpad"), _("Tap to click")), "touchpad");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Touchpad"), _("Physical clicking")), "touchpad");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Touchpad"), _("Scrolling")), "touchpad");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Touchpad"), _("Natural scrolling")), "touchpad");
-        search_results.set ("%s → %s → %s".printf (display_name, _("Touchpad"), _("Disable while typing")), "touchpad");
+        search_results.set ("%s → %s".printf (display_name, _("Tablet")), "general");
+        //  search_results.set ("%s → %s".printf (display_name, _("Mouse")), "mouse");
+        //  search_results.set ("%s → %s → %s".printf (display_name, _("Mouse"), _("Pointer speed")), "mouse");
+        //  search_results.set ("%s → %s".printf (display_name, _("Touchpad")), "touchpad");
+        //  search_results.set ("%s → %s → %s".printf (display_name, _("Touchpad"), _("Pointer speed")), "touchpad");
+
         return search_results;
     }
 
     private void load_settings () {
-        mouse_settings = new Backend.MouseSettings ();
-        touchpad_settings = new Backend.TouchpadSettings ();
+        pen_settings = new Backend.PenSettings ();
+        ringer_settings = new Backend.RingerSettings ();
     }
 }
 

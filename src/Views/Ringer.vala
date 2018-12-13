@@ -17,17 +17,17 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class Tablet.GeneralView : Gtk.Grid {
-    public Backend.GeneralSettings general_settings { get; construct; }
+public class Tablet.RingerView : Gtk.Grid {
+    public Backend.RingerSettings ringer_settings { get; construct; }
 
-    public GeneralView (Backend.GeneralSettings general_settings) {
-        Object (general_settings: general_settings);
+    public RingerView (Backend.RingerSettings ringer_settings) {
+        Object (ringer_settings: ringer_settings);
     }
 
     construct {
-        var glib_settings = new GLib.Settings ("org.gnome.desktop.peripherals.tablet");
+        var glib_settings = new GLib.Settings ("org.gnome.desktop.peripherals.tablet.pad-button");
 
-        row_spacing = 6;
+        row_spacing = 12;
         column_spacing = 12;
     }
 }

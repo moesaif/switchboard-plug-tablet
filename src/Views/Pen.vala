@@ -17,11 +17,17 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class Tablet.Backend.TouchpadSettings : Granite.Services.Settings {
-    public string click_method { get; set; }
+public class Tablet.PenView : Gtk.Grid {
+    public Backend.PenSettings pen_settings { get; construct; }
 
-    public TouchpadSettings () {
-        base ("org.gnome.desktop.peripherals.touchpad");
+    public PenView (Backend.PenSettings pen_settings) {
+        Object (pen_settings: pen_settings);
+    }
+
+    construct {
+        var glib_settings = new GLib.Settings ("org.gnome.desktop.peripherals.tablet.stylus");
+
+        row_spacing = 12;
+        column_spacing = 12;
     }
 }
-

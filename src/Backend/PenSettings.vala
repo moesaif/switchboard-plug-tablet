@@ -17,11 +17,9 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class Tablet.Backend.MouseSettings : Granite.Services.Settings {
-    public bool left_handed { get; set; }
-
-    public MouseSettings () {
-        base ("org.gnome.desktop.peripherals.mouse");
+public class Tablet.Backend.PenSettings : Granite.Services.Settings {
+    public PenSettings () {
+        base ("org.gnome.desktop.peripherals.tablet.stylus");
     }
 }
 

@@ -17,18 +17,9 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class Tablet.GeneralView : Gtk.Grid {
-    public Backend.GeneralSettings general_settings { get; construct; }
-
-    public GeneralView (Backend.GeneralSettings general_settings) {
-        Object (general_settings: general_settings);
-    }
-
-    construct {
-        var glib_settings = new GLib.Settings ("org.gnome.desktop.peripherals.tablet");
-
-        row_spacing = 6;
-        column_spacing = 12;
+public class Tablet.Backend.GeneralSettings : Granite.Services.Settings {
+    public GeneralSettings () {
+        base ("org.gnome.desktop.peripherals.tablet");
     }
 }
 
