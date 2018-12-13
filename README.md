@@ -1,6 +1,6 @@
 # Graphic Tablet Plug
 
-![screenshot](data/screenshot-general.png?raw=true)
+<!-- ![screenshot](data/screenshot-general.png?raw=true) -->
 
 ## Building and Installation
 
